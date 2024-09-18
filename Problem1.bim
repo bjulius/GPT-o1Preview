@@ -1,0 +1,1198 @@
+{
+  "name": "How Good is ChatGPT o1 Strawberry at DAX",
+  "compatibilityLevel": 1550,
+  "model": {
+    "culture": "en-US",
+    "dataAccessOptions": {
+      "legacyRedirects": true,
+      "returnErrorValuesAsNull": true
+    },
+    "defaultPowerBIDataSourceVersion": "powerBI_V3",
+    "sourceQueryCulture": "en-US",
+    "tables": [
+      {
+        "name": "Problem1",
+        "lineageTag": "a00dfaa1-c25a-4306-a2c1-c81520b2beaf",
+        "columns": [
+          {
+            "name": "Date",
+            "dataType": "dateTime",
+            "sourceColumn": "Date",
+            "formatString": "Short Date",
+            "lineageTag": "ec40d327-594f-4c4f-af2e-29e9798fe20b",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              },
+              {
+                "name": "UnderlyingDateTimeDataType",
+                "value": "Date"
+              }
+            ]
+          },
+          {
+            "name": "SalesTarget",
+            "dataType": "int64",
+            "sourceColumn": "SalesTarget",
+            "formatString": "0",
+            "lineageTag": "85f905ae-7ef7-454e-ad8a-90789bcbc690",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "IncrementalCost",
+            "dataType": "int64",
+            "sourceColumn": "IncrementalCost",
+            "formatString": "0",
+            "lineageTag": "27f67fe4-2985-41ca-947a-9bda9ec6b2e1",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          },
+          {
+            "name": "TargetProfit",
+            "dataType": "int64",
+            "sourceColumn": "TargetProfit",
+            "formatString": "0",
+            "lineageTag": "13cfd617-30cb-4dc9-acdd-88a56a90a043",
+            "summarizeBy": "sum",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Problem1",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i45WstQ31TcyMDJR0lEyNTAAkkYgwsTCQClWByRrhk3WDCZraIRN2gQubYxNGkjGxgIA\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Date = _t, SalesTarget = _t, IncrementalCost = _t, TargetProfit = _t]),",
+                "    #\"Changed Type\" = Table.TransformColumnTypes(Source,{{\"Date\", Date.Type}, {\"SalesTarget\", Int64.Type}, {\"IncrementalCost\", Int64.Type}, {\"TargetProfit\", Int64.Type}})",
+                "in",
+                "    #\"Changed Type\""
+              ]
+            }
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_NavigationStepName",
+            "value": "Navigation"
+          },
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      },
+      {
+        "name": "Key Measures",
+        "lineageTag": "b515adfd-29bc-41e7-9006-b697d2dce607",
+        "columns": [
+          {
+            "name": "Column1",
+            "dataType": "string",
+            "sourceColumn": "Column1",
+            "lineageTag": "851ad852-e63a-4d65-968e-2f2ea72124cd",
+            "summarizeBy": "none",
+            "annotations": [
+              {
+                "name": "SummarizationSetBy",
+                "value": "Automatic"
+              }
+            ]
+          }
+        ],
+        "partitions": [
+          {
+            "name": "Key Measures",
+            "mode": "import",
+            "source": {
+              "type": "m",
+              "expression": [
+                "let",
+                "    Source = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText(\"i44FAA==\", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Column1 = _t])",
+                "in",
+                "    Source"
+              ]
+            }
+          }
+        ],
+        "measures": [
+          {
+            "name": "Problem 1 Brian",
+            "expression": [
+              "",
+              "",
+              "VAR __CurrDate = MAX(Problem1[Date] )",
+              "",
+              "VAR __CurrCol1 = MAX(Problem1[SalesTarget] )",
+              "",
+              "VAR __vTable = ",
+              "    FILTER( ",
+              "        ALL( Problem1),",
+              "        Problem1[Date] <= __CurrDate",
+              "    )",
+              "",
+              "VAR CumulIncrCos5 =",
+              "SUMX(",
+              "    __vTable,",
+              "    [Total Incr Cost]",
+              ")",
+              "",
+              "VAR __Result =",
+              "__CurrCol1 - CumulIncrCos5",
+              "",
+              "RETURN __Result"
+            ],
+            "formatString": "0",
+            "lineageTag": "6872483a-d224-47a0-9c83-ff0c51e11d7a"
+          },
+          {
+            "name": "Total Incr Cost",
+            "expression": [
+              "",
+              "SUM( Problem1[IncrementalCost] )"
+            ],
+            "formatString": "0",
+            "lineageTag": "ee292f53-113d-4bf8-a7db-0de07cc6f7db"
+          }
+        ],
+        "annotations": [
+          {
+            "name": "PBI_ResultType",
+            "value": "Table"
+          }
+        ]
+      }
+    ],
+    "cultures": [
+      {
+        "name": "en-US",
+        "linguisticMetadata": {
+          "content": {
+            "Version": "3.5.0",
+            "Language": "en-US",
+            "Entities": {
+              "problem_1": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Problem1"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "problem 1": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "Problem1": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.99
+                    }
+                  }
+                ]
+              },
+              "problem_1.date": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Problem1",
+                    "ConceptualProperty": "Date"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "date": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "moment": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.736
+                    }
+                  },
+                  {
+                    "period": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.714
+                    }
+                  }
+                ],
+                "SemanticType": "Time"
+              },
+              "problem_1.sales_target": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Problem1",
+                    "ConceptualProperty": "SalesTarget"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "sales target": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "sale target": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.78
+                    }
+                  },
+                  {
+                    "SalesTarget": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.99
+                    }
+                  },
+                  {
+                    "target": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "sale focus": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "sale goal": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "sale objective": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.727
+                    }
+                  },
+                  {
+                    "focus": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "goal": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.714
+                    }
+                  },
+                  {
+                    "objective": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.714
+                    }
+                  }
+                ]
+              },
+              "problem_1.incremental_cost": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Problem1",
+                    "ConceptualProperty": "IncrementalCost"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "incremental cost": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "IncrementalCost": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.99
+                    }
+                  },
+                  {
+                    "cost": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "incremental price": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "incremental charge": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "incremental rate": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "incremental fee": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "incremental total": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "price": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "charge": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "rate": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "fee": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.476
+                    }
+                  },
+                  {
+                    "incremental expenditure": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.475
+                    }
+                  }
+                ]
+              },
+              "problem_1.target_profit": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Problem1",
+                    "ConceptualProperty": "TargetProfit"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "target profit": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "TargetProfit": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.99
+                    }
+                  },
+                  {
+                    "profit": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "focus profit": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.582
+                    }
+                  },
+                  {
+                    "goal profit": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.582
+                    }
+                  },
+                  {
+                    "objective profit": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.582
+                    }
+                  },
+                  {
+                    "target income": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "target revenue": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "income": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "revenue": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "target turnover": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "target return": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "target yield": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  }
+                ]
+              },
+              "key_measure": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Key Measures"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "key measure": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "measure": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "key degree": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "key quantity": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "key quota": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "key extent": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.5
+                    }
+                  },
+                  {
+                    "degree": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "quota": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "extent": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.491
+                    }
+                  },
+                  {
+                    "key amount": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "key portion": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  },
+                  {
+                    "key ration": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.485
+                    }
+                  }
+                ]
+              },
+              "key_measure.column_1": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Key Measures",
+                    "ConceptualProperty": "Column1"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "column 1": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "Column1": {
+                      "Type": "Noun",
+                      "State": "Generated",
+                      "Weight": 0.99
+                    }
+                  }
+                ]
+              },
+              "key_measure.problem_1_brian": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Key Measures",
+                    "ConceptualProperty": "Problem 1 Brian"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "problem 1 brian": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "brian": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "1 brian": {
+                      "State": "Generated",
+                      "Weight": 0.97
+                    }
+                  },
+                  {
+                    "SollutionB": {
+                      "State": "Suggested",
+                      "Source": {
+                        "Type": "External",
+                        "Agent": "PowerBI.VisualColumnRename"
+                      },
+                      "Weight": 0.9
+                    }
+                  }
+                ]
+              },
+              "key_measure.total_incr_cost": {
+                "Definition": {
+                  "Binding": {
+                    "ConceptualEntity": "Key Measures",
+                    "ConceptualProperty": "Total Incr Cost"
+                  }
+                },
+                "State": "Generated",
+                "Terms": [
+                  {
+                    "total incr cost": {
+                      "State": "Generated"
+                    }
+                  },
+                  {
+                    "aggregate incr cost": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.591
+                    }
+                  },
+                  {
+                    "overall incr cost": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.591
+                    }
+                  },
+                  {
+                    "total incr price": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "total incr charge": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "total incr rate": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "total incr fee": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "total incr total": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.492
+                    }
+                  },
+                  {
+                    "total incr expenditure": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.482
+                    }
+                  },
+                  {
+                    "total incr budget": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.468
+                    }
+                  },
+                  {
+                    "total incr amount": {
+                      "Type": "Noun",
+                      "State": "Suggested",
+                      "Source": {
+                        "Agent": "Thesaurus"
+                      },
+                      "Weight": 0.468
+                    }
+                  }
+                ]
+              }
+            },
+            "Relationships": {
+              "problem_1_is_expensive": {
+                "Binding": {
+                  "ConceptualEntity": "Problem1"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "problem_1": {
+                    "Target": {
+                      "Entity": "problem_1"
+                    }
+                  },
+                  "problem_1.incremental_cost": {
+                    "Target": {
+                      "Entity": "problem_1.incremental_cost"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Adjective": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Adjectives": [
+                        {
+                          "expensive": {
+                            "State": "Generated"
+                          }
+                        }
+                      ],
+                      "Antonyms": [
+                        {
+                          "cheap": {
+                            "State": "Generated"
+                          }
+                        }
+                      ],
+                      "Measurement": {
+                        "Role": "problem_1.incremental_cost"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "incremental_cost_indicates_how_expensive_problem_1_are"
+                  },
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Object": {
+                        "Role": "problem_1.incremental_cost"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "problem_1_have_incremental_costs"
+                  }
+                ]
+              },
+              "problem_1_has_date": {
+                "Binding": {
+                  "ConceptualEntity": "Problem1"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "problem_1": {
+                    "Target": {
+                      "Entity": "problem_1"
+                    }
+                  },
+                  "problem_1.date": {
+                    "Target": {
+                      "Entity": "problem_1.date"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Object": {
+                        "Role": "problem_1.date"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "problem_1_have_dates"
+                  }
+                ]
+              },
+              "problem_1_has_sales_target": {
+                "Binding": {
+                  "ConceptualEntity": "Problem1"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "problem_1": {
+                    "Target": {
+                      "Entity": "problem_1"
+                    }
+                  },
+                  "problem_1.sales_target": {
+                    "Target": {
+                      "Entity": "problem_1.sales_target"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Object": {
+                        "Role": "problem_1.sales_target"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "problem_1_have_sales_targets"
+                  }
+                ]
+              },
+              "problem_1_has_target_profit": {
+                "Binding": {
+                  "ConceptualEntity": "Problem1"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "problem_1": {
+                    "Target": {
+                      "Entity": "problem_1"
+                    }
+                  },
+                  "problem_1.target_profit": {
+                    "Target": {
+                      "Entity": "problem_1.target_profit"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Object": {
+                        "Role": "problem_1.target_profit"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "problem_1_have_target_profits"
+                  }
+                ]
+              },
+              "key_measure_has_column_1": {
+                "Binding": {
+                  "ConceptualEntity": "Key Measures"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "key_measure": {
+                    "Target": {
+                      "Entity": "key_measure"
+                    }
+                  },
+                  "key_measure.column_1": {
+                    "Target": {
+                      "Entity": "key_measure.column_1"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "key_measure"
+                      },
+                      "Object": {
+                        "Role": "key_measure.column_1"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "key_measures_have_column_1"
+                  }
+                ]
+              },
+              "key_measure_has_problem_1_brian": {
+                "Binding": {
+                  "ConceptualEntity": "Key Measures"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "key_measure": {
+                    "Target": {
+                      "Entity": "key_measure"
+                    }
+                  },
+                  "key_measure.problem_1_brian": {
+                    "Target": {
+                      "Entity": "key_measure.problem_1_brian"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "key_measure"
+                      },
+                      "Object": {
+                        "Role": "key_measure.problem_1_brian"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "key_measures_have_problem_1_brian"
+                  }
+                ]
+              },
+              "problem_1_has_key_measure_total_incr_cost": {
+                "Binding": {
+                  "ConceptualEntity": "Problem1"
+                },
+                "State": "Generated",
+                "Roles": {
+                  "problem_1": {
+                    "Target": {
+                      "Entity": "problem_1"
+                    }
+                  },
+                  "key_measure.total_incr_cost": {
+                    "Target": {
+                      "Entity": "key_measure.total_incr_cost"
+                    }
+                  }
+                },
+                "Phrasings": [
+                  {
+                    "Attribute": {
+                      "Subject": {
+                        "Role": "problem_1"
+                      },
+                      "Object": {
+                        "Role": "key_measure.total_incr_cost"
+                      }
+                    },
+                    "State": "Generated",
+                    "Weight": 0.99,
+                    "ID": "problem_1_have_total_incr_cost"
+                  }
+                ]
+              }
+            }
+          },
+          "contentType": "json"
+        }
+      }
+    ],
+    "annotations": [
+      {
+        "name": "__PBI_TimeIntelligenceEnabled",
+        "value": "0"
+      },
+      {
+        "name": "PBIDesktopVersion",
+        "value": "2.130.930.0 (24.06)"
+      },
+      {
+        "name": "PBI_QueryOrder",
+        "value": "[\"Problem1\",\"Key Measures\"]"
+      },
+      {
+        "name": "__eDNA_MMPro",
+        "value": "1"
+      },
+      {
+        "name": "TabularEditor_SerializeOptions",
+        "value": "{\"IgnoreInferredObjects\":true,\"IgnoreInferredProperties\":true,\"IgnoreTimestamps\":true,\"SplitMultilineStrings\":true,\"PrefixFilenames\":false,\"LocalTranslations\":false,\"LocalPerspectives\":false,\"LocalRelationships\":false,\"Levels\":[\"Data Sources\",\"Perspectives\",\"Relationships\",\"Roles\",\"Tables\",\"Tables/Calculation Items\",\"Tables/Columns\",\"Tables/Hierarchies\",\"Tables/Measures\",\"Tables/Partitions\",\"Translations\"]}"
+      },
+      {
+        "name": "__TEdtr",
+        "value": "1"
+      }
+    ]
+  }
+}
